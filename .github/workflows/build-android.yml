@@ -50,8 +50,17 @@ jobs:
           haxelib --global run hmm setup
           hmm install
 
-      - name: Set up Lime (same steps as the official build)
+            - name: Set up Lime (bootstrap native file, then rebuild properly)
         run: |
+          PROJECT_DIR="$PWD"
+          mkdir -p /tmp/limerel && cd /tmp/limerel
+          haxelib newrepo
+          haxelib install lime --always --skip-dependencies
+          NDLL=$(find /tmp/limerel/.haxelib/lime -path '*ndll/Linux64/lime.ndll' | head -1)
+          echo "Found release ndll: $NDLL"
+          cd "$PROJECT_DIR"
+          mkdir -p .haxelib/lime/git/ndll/Linux64
+          cp "$NDLL" .haxelib/lime/git/ndll/Linux64/lime.ndll
           haxelib --always run lime setup
           haxelib run lime rebuild hxcpp
           haxelib run lime rebuild cpp -64
