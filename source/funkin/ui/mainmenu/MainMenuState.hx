@@ -67,6 +67,17 @@ class MainMenuState extends MusicBeatState
 
   static var rememberedSelectedIndex:Int = 0;
 
+  // ---- CUSTOM UI SETTINGS: change these first ----
+  /** Name shown in the bottom-left watermark. */
+  static final ENGINE_NAME:String = 'My Engine';
+
+  /** Color multiplied over the menu background (0xFFFFFFFF = unchanged). */
+  static final MENU_BG_TINT:FlxColor = 0xFF9D8CFF;
+
+  /** Vertical gap between main menu buttons in pixels (original: 160). */
+  static final MENU_ITEM_SPACING:Float = 140;
+  // -------------------------------------------------
+
   // this should never be false on non-mobile targets.
   var hasUpgraded:Bool = false;
   var upgradeSparkles:FlxTypedSpriteGroup<UpgradeSparkle>;
@@ -121,6 +132,7 @@ class MainMenuState extends MusicBeatState
     bg.setGraphicSize(Std.int(FlxG.width * 1.2));
     bg.updateHitbox();
     bg.screenCenter();
+    bg.color = MENU_BG_TINT; // CUSTOM UI: recolors the whole menu background
     add(bg);
 
     add(camFollow);
@@ -225,7 +237,7 @@ class MainMenuState extends MusicBeatState
     });
 
     // Reset position of menu items.
-    final spacing:Float = 160;
+    final spacing:Float = MENU_ITEM_SPACING; // CUSTOM UI: distance between menu buttons
     final top:Float = (FlxG.height - (spacing * (menuItems.length - 1))) / 2;
 
     for (index => menuItem in menuItems)
@@ -318,7 +330,7 @@ class MainMenuState extends MusicBeatState
   {
     if (leftWatermarkText == null) return;
 
-    leftWatermarkText.text = Constants.VERSION;
+    leftWatermarkText.text = ENGINE_NAME + ' | ' + Constants.VERSION; // CUSTOM UI: your engine name
 
     #if FEATURE_NEWGROUNDS
     if (NewgroundsClient.instance.isLoggedIn())
