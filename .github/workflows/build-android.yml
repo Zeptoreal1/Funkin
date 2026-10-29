@@ -1,11 +1,5 @@
 name: Build Android APK
 
-# Simple Android build for forks. The official build-game.yml uses FunkinCrew's
-# private runners and secrets, so it will NOT work on a fork.
-# Run it from the Actions tab: "Build Android APK" -> "Run workflow".
-# The APK shows up under "Artifacts" at the bottom of the finished run.
-# NOTE: untested as written. If a step fails, paste the red log here and we'll fix it.
-
 on:
   workflow_dispatch:
 
